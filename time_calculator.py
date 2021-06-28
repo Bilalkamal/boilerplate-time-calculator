@@ -9,7 +9,6 @@ def convert_min_to_hrs(minutes):
     rem_minutes = minutes % 60
     return hours, rem_minutes
 
-
 def add_time(start, duration, day = None):
     if day: day = day.title()
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']
