@@ -16,19 +16,22 @@ def convert_hrs_to24(hours):
         return 12
     else: return 12 + hours 
 
-def add_time(start, duration):
-    minutes_counter = 0
-    hours_counter = 0
+
+def add_time(start, duration, day = None):
+    minutes_counter,new_hours,hours_counter = 0,0,0
     start_hours ,start_minutes, start_am_pm = get_hours_min(start)
     duration_hours, duration_minutes = get_hours_min(duration)
     minutes_counter += start_minutes +duration_minutes
-    new_hours = 0
     if minutes_counter >=60: new_hours, minutes_counter = convert_min_to_hrs(minutes_counter)
-    # print(f'duration {duration_hours}')
-    if start_am_pm == "PM": hours_counter  = convert_hrs_to24(start_hours)
-    hours_counter += new_hours + duration_hours
+    if start_am_pm == "PM": hours_counter , start_hours = convert_hrs_to24(start_hours), 0 
+    hours_counter += new_hours + duration_hours + start_hours
     
     print(hours_counter)
     print(minutes_counter)
+    if hours_counter <11 and day is None: return f'{hours_counter%12}:{minutes_counter} AM'
+    if hours_counter <24 and day is None and hours_counter >11: return f'{hours_counter%12}:{minutes_counter} PM'
+    if hours_counter <11 and day is not None: return f'{hours_counter%12}:{minutes_counter} AM, {day.title()}'
+    if hours_counter <24 and day is not None and hours_counter >11: return f'{hours_counter%12}:{minutes_counter} PM, {day.title()}'
+    
     # return new_time
-print(add_time("3:30 PM", "2:12"))
+print(add_time("0:30 AM", "200:12","Monday"))
